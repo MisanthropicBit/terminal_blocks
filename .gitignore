@@ -1,0 +1,6 @@
+terminal_blocks
+*.o
+*.py
+*.docx
+tags
+*.dSYM/
