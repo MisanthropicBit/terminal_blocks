@@ -335,28 +335,36 @@ void tb_draw_guides(tb_block* block, tb_game_grid* grid) {
     int ymax = grid->y + grid->height;
 
     for (int i = 0; i < TB_SQUARES_PER_BLOCK; ++i) {
-        int sy = block->squares[i][0] + 1;
+        int sy = block->squares[i][0];
         int sx = block->squares[i][1];
         int draw_guide = 1;
 
         if (sy < ymax) {
             // Check to see if there is another square beneath this one
             for (int j = 0; j < TB_SQUARES_PER_BLOCK; ++j) {
-                if (i != j && sy == block->squares[j][0]) {
-                    draw_guide = 0;
+                if (i != j) {
+                    if (sy + 1 == block->squares[j][0] && sx == block->squares[j][1]) {
+                        draw_guide = 0;
+                        break;
+                    }
                 }
             }
 
             if (draw_guide) {
                 // We are within bounds and there is nothing underneath this square
-                for (int y = sy; y < ymax; ++y) {
+                for (int y = sy + 1; y < ymax; ++y) {
                     // Convert to grid coordinates
                     int gy = y - grid->y;
                     int gx = sx - grid->x;
 
                     // We draw a guide if we hit another block or the bottom of the grid
                     if (grid->grid[gy * grid->width + gx] > 0) {
-                        tb_draw_char('_', y - 1, sx, -1, A_DIM);
+                        if (sy < y - 1) {
+                            // Ensure that there is space between the current
+                            // block and the remaining blocks to draw the guide
+                            tb_draw_char('_', y - 1, sx, -1, A_DIM);
+                        }
+
                         break;
                     } else if (y == ymax - 1) {
                         tb_draw_char('_', y, sx, -1, A_DIM);
