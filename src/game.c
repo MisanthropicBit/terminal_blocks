@@ -330,7 +330,7 @@ int tb_check_game_over(tb_block* focus_block,
     return tb_check_block_collisions(focus_block->squares, None, grid);
 }
 
-// Draw visual guides for a block
+// Draw visual guides for where a block will be placed if dropped
 void tb_draw_guides(tb_block* block, tb_game_grid* grid) {
     int ymax = grid->y + grid->height;
 
