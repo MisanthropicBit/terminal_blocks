@@ -8,13 +8,13 @@
 #include <unistd.h>
 
 void tb_display_menu_title(int y, int x) {
-    /*attron(A_BOLD);*/
+    attron(A_BOLD);
     tb_print_message(TB_TITLE_MASK,
                      TB_TITLE_WIDTH,
                      TB_TITLE_HEIGHT,
                      y,
                      x);
-    /*attroff(A_BOLD);*/
+    attroff(A_BOLD);
 
     // Display the current version
     mvprintw(y + TB_TITLE_HEIGHT + 2,
