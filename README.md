@@ -26,8 +26,14 @@ SUM:                            19            331            187           1232
 
 ## Installing
 
-Run `make` in the game's top-level directory. This creates the game executable
-`terminal_blocks`.
+Clone the repository and run `make` in the game's top-level directory. This
+creates the game executable `terminal_blocks`.
+
+```bash
+> git clone https://github.com/MisanthropicBit/terminal_blocks
+> make
+> ./terminal_blocks
+```
 
 To combat boredom, you can add the game's directory to your `PATH`.
 
@@ -51,9 +57,3 @@ alias terminal_blocks="<path-to-terminal_blocks-executable>"
 * **p**: Play game (in menu) or pause/unpause game
 * **f**: Confirm menu selection or drop block instantly to bottom
 * **q**: Quit menu or game
-
-## TODO
-
-- [ ] Implement entering and saving highscores
-- [ ] Fix collision detection (possibly off-by-one error)
-- [ ] Register appropriate signal handlers
