@@ -516,8 +516,6 @@ int tb_run_game(int* const final_score) {
         mvprintw(score_y, score_x, "Score: %d", score);
     }
 
-    /*mvprintw(1, 0, "%s\n", "quitting");*/
-
     // Deallocate memory
     tb_deallocate_block(focus_block);
     tb_deallocate_block(next_block);
