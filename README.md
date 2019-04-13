@@ -55,5 +55,6 @@ alias terminal_blocks="<path-to-terminal_blocks-executable>"
 * **j**: Rotate left
 * **k**: Rotate right
 * **p**: Play game (in menu) or pause/unpause game
+* **g**: Toggle guides for where the focus block will land
 * **f**: Confirm menu selection or drop block instantly to bottom
 * **q**: Quit menu or game

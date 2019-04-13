@@ -247,7 +247,8 @@ int tb_check_rotation_collisions(tb_block* focus_block,
 // Handle user input when the game is being played
 int tb_handle_game_input(tb_block* const focus_block,
                          tb_game_grid* grid,
-                         int game_over) {
+                         int game_over,
+                         int* draw_guide) {
     int ch = getch();
 
     #if TB_DEBUG
@@ -307,6 +308,10 @@ int tb_handle_game_input(tb_block* const focus_block,
 
             case TB_KEY_CONFIRM:
                 tb_drop_block(focus_block, grid);
+                break;
+
+            case TB_KEY_TOGGLE_GUIDES:
+                *draw_guide = !*draw_guide;
                 break;
 
             case TB_KEY_PAUSE:
@@ -392,6 +397,7 @@ int tb_run_game(int* const final_score) {
     *final_score = 0;
     int score = 0;
     int game_over = 0;
+    int draw_guide = 1;
     int running = 1;
     tb_time_unit move_time = tb_current_time();
     tb_time_unit slide_time = 0;
@@ -413,6 +419,8 @@ int tb_run_game(int* const final_score) {
     int next_block_x = grid->x + TB_GRID_WIDTH + 4;
     int score_y = next_block_y + 4;
     int score_x = next_block_x;
+    int guide_y = score_y + 2;
+    int guide_x = score_x;
 
     tb_block* focus_block = tb_spawn_block(grid->y - 1, grid->x + TB_GRID_WIDTH/2);
     tb_block* next_block = tb_spawn_block(next_block_y, next_block_x);
@@ -422,7 +430,7 @@ int tb_run_game(int* const final_score) {
     }
 
     while (running) {
-        if(tb_handle_game_input(focus_block, grid, game_over)) {
+        if(tb_handle_game_input(focus_block, grid, game_over, &draw_guide)) {
             break;
         }
 
@@ -503,8 +511,12 @@ int tb_run_game(int* const final_score) {
         // Draw the grid
         tb_draw_grid(grid, TB_BLOCK_CHAR);
 
-        // Draw the guides that show where the block will land
-        tb_draw_guides(focus_block, grid);
+        if (draw_guide) {
+            // Draw the guides that show where the block will land
+            tb_draw_guides(focus_block, grid);
+        }
+
+        mvprintw(guide_y, guide_x, "Guides %s", draw_guide ? "enabled" : "disabled");
 
         // Draw the focus block
         tb_draw_block(focus_block);

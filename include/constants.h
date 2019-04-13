@@ -121,16 +121,17 @@ static const int TB_GAME_OVER_MSG_MASK[TB_GAME_OVER_MSG_HEIGHT][TB_GAME_OVER_MSG
 };
 
 // User input keys
-static const int TB_KEY_LEFT         = 'a';
-static const int TB_KEY_DOWN         = 's';
-static const int TB_KEY_RIGHT        = 'd';
-static const int TB_KEY_UP           = 'w';
-static const int TB_KEY_CONFIRM      = 'f';
-static const int TB_KEY_DELETE       = 127; // Backspace
-static const int TB_KEY_ROTATE_LEFT  = 'j';
-static const int TB_KEY_ROTATE_RIGHT = 'k';
-static const int TB_KEY_PAUSE        = 'p';
-static const int TB_KEY_QUIT         = 'q';
+static const int TB_KEY_LEFT          = 'a';
+static const int TB_KEY_DOWN          = 's';
+static const int TB_KEY_RIGHT         = 'd';
+static const int TB_KEY_UP            = 'w';
+static const int TB_KEY_CONFIRM       = 'f';
+static const int TB_KEY_DELETE        = 127; // Backspace
+static const int TB_KEY_ROTATE_LEFT   = 'j';
+static const int TB_KEY_ROTATE_RIGHT  = 'k';
+static const int TB_KEY_TOGGLE_GUIDES = 'g';
+static const int TB_KEY_PAUSE         = 'p';
+static const int TB_KEY_QUIT          = 'q';
 
 static const char* TB_HIGHSCORE_PATH = "./highscores.txt";
 
