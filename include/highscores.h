@@ -1,7 +1,7 @@
 #ifndef TB_HIGHSCORES_H
 #define TB_HIGHSCORES_H
 
-static const int TB_MAX_NAME_LENGTH = 50;
+#define TB_MAX_NAME_LENGTH 50
 
 typedef struct {
     char name[TB_MAX_NAME_LENGTH];
