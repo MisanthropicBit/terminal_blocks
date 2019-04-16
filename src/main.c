@@ -7,6 +7,12 @@
 #include "terminal.h"
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
+
+/// Return the current user's home directory
+char* tb_get_user_home() {
+    return getenv("HOME");
+}
 
 int main() {
     tb_register_signal_handlers();
@@ -26,9 +32,25 @@ int main() {
     int next_state = 0;
     int final_score = 0;
 
+    // Construct the path to the user's home directory
+    char* home = tb_get_user_home();
+    int len = strlen(home) + strlen(TB_HIGHSCORE_PATH);
+    char* hs_path = malloc(sizeof(char) * (len + 1));
+
+    if (!hs_path) {
+        printf("%s", "Failed to allocate highscore path");
+        tb_close_terminal();
+        return 1;
+    }
+
+    strcpy(hs_path, home);
+    strcat(hs_path, TB_HIGHSCORE_PATH);
+
     // Load highscores
     tb_highscores* highscores =
-        tb_load_highscores(TB_HIGHSCORE_PATH, TB_MAX_HIGHSCORES);
+        tb_load_highscores(hs_path, TB_MAX_HIGHSCORES);
+
+    free(hs_path);
 
     if (!highscores) {
         printf("%s", "Failed to load highscores");

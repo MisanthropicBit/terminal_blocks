@@ -2,10 +2,6 @@
 #include "highscores.h"
 #include "menu.h"
 #include "terminal.h"
-#include <pwd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 void tb_display_menu_title(int y, int x) {
     attron(A_BOLD);
@@ -29,19 +25,6 @@ void tb_display_menu_title(int y, int x) {
              x + TB_TITLE_WIDTH/2 - 5,
              "Colors: %d",
              tb_get_num_colors_supported());
-}
-
-/// Return the current user's home directory
-char* tb_get_user_home() {
-    char* user_home = getenv("HOME");
-
-    /*if (!user_home) {*/
-    /*    struct passwd* pw = getpwuid(getuid());*/
-
-    /*    return pw->pw_dir ? pw->pw_dir : NULL;*/
-    /*}*/
-
-    return user_home;
 }
 
 /// Move and redraw the cursor

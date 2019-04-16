@@ -101,8 +101,19 @@ tb_highscores* tb_load_highscores(const char* const path, int count) {
         ++record_id;
     }
 
-    if (record_id != TB_MAX_HIGHSCORES) {
-        mvprintw(5, 0, "%d == %d?", record_id, TB_MAX_HIGHSCORES);
+    if (record_id == 0) {
+        // No records were read, assume the file was created anew and write the
+        // default values to the file
+        for (int i = 0; i < TB_MAX_HIGHSCORES; ++i) {
+            fprintf(file, "%s %d\n",
+                    TB_DEFAULT_HIGHSCORE_NAMES[i],
+                    TB_DEFAULT_HIGHSCORE_SCORES[i]);
+
+            tb_highscore* highscore = highscores->records[i];
+            strncpy(highscore->name, TB_DEFAULT_HIGHSCORE_NAMES[i], TB_MAX_NAME_LENGTH);
+            highscore->score = TB_DEFAULT_HIGHSCORE_SCORES[i];
+        }
+    } else if (record_id != TB_MAX_HIGHSCORES) {
         return NULL;
     }
 
