@@ -34,6 +34,12 @@ int main() {
 
     // Construct the path to the user's home directory
     char* home = tb_get_user_home();
+
+    if (!home) {
+        tb_close_terminal();
+        return 1;
+    }
+
     int len = strlen(home) + strlen(TB_HIGHSCORE_PATH);
     char* hs_path = malloc(sizeof(char) * (len + 1));
 
