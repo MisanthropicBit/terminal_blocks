@@ -18,7 +18,6 @@ int main() {
     tb_register_signal_handlers();
 
     if (tb_init_terminal(stdscr) != 0) {
-        printf("Failed to initialise terminal\n");
         return 1;
     }
 
@@ -44,7 +43,6 @@ int main() {
     char* hs_path = malloc(sizeof(char) * (len + 1));
 
     if (!hs_path) {
-        printf("%s", "Failed to allocate highscore path");
         tb_close_terminal();
         return 1;
     }
@@ -59,7 +57,6 @@ int main() {
     free(hs_path);
 
     if (!highscores) {
-        printf("%s", "Failed to load highscores");
         tb_close_terminal();
         return 1;
     }
