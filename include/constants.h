@@ -132,7 +132,7 @@ static const int TB_GAME_OVER_MSG_MASK[TB_GAME_OVER_MSG_HEIGHT][TB_GAME_OVER_MSG
     {0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1}
 };
 
-static const char* TB_HIGHSCORE_PATH = "./highscores.txt";
+static const char* TB_HIGHSCORE_PATH = "/tb_highscores.txt";
 
 static const char* TB_DEFAULT_HIGHSCORE_NAMES[TB_MAX_HIGHSCORES] = {
     "You",
