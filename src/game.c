@@ -248,7 +248,8 @@ int tb_check_rotation_collisions(tb_block* focus_block,
 int tb_handle_game_input(tb_block* const focus_block,
                          tb_game_grid* grid,
                          int game_over,
-                         int* draw_guide) {
+                         int* draw_guide,
+                         int* pause) {
     int ch = getch();
 
     #if TB_DEBUG
@@ -315,6 +316,7 @@ int tb_handle_game_input(tb_block* const focus_block,
                 break;
 
             case TB_KEY_PAUSE:
+                *pause = !*pause;
                 break;
 
             case TB_KEY_QUIT:
@@ -398,6 +400,7 @@ int tb_run_game(int* const final_score) {
     int score = 0;
     int game_over = 0;
     int draw_guide = 1;
+    int pause = 0;
     int running = 1;
     tb_time_unit move_time = tb_current_time();
     tb_time_unit slide_time = 0;
@@ -421,6 +424,8 @@ int tb_run_game(int* const final_score) {
     int score_x = next_block_x;
     int guide_y = score_y + 2;
     int guide_x = score_x;
+    int pause_y = guide_y + 2;
+    int pause_x = guide_x;
 
     tb_block* focus_block = tb_spawn_block(grid->y - 1, grid->x + TB_GRID_WIDTH/2);
     tb_block* next_block = tb_spawn_block(next_block_y, next_block_x);
@@ -430,13 +435,15 @@ int tb_run_game(int* const final_score) {
     }
 
     while (running) {
-        if(tb_handle_game_input(focus_block, grid, game_over, &draw_guide)) {
+        if(tb_handle_game_input(focus_block, grid, game_over, &draw_guide, &pause)) {
             break;
         }
 
         werase(stdscr);
 
-        if (!game_over) {
+        if (pause) {
+            // Do not update the game when paused
+        } else if (!game_over) {
             if (!sliding) {
                 // Check if it is time to forcefully move the focus block
                 if (tb_current_time() - move_time >= TB_MOVE_DELAY) {
@@ -517,6 +524,10 @@ int tb_run_game(int* const final_score) {
         }
 
         mvprintw(guide_y, guide_x, "Guides %s", draw_guide ? "enabled" : "disabled");
+
+        if (pause) {
+            mvprintw(pause_y, pause_x, "Game paused");
+        }
 
         // Draw the focus block
         tb_draw_block(focus_block);
