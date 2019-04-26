@@ -55,6 +55,7 @@ void tb_deallocate_highscores(tb_highscores* highscores) {
         }
     }
 
+    free(highscores->records);
     free(highscores);
     highscores = NULL;
 }
