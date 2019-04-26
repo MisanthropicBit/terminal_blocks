@@ -427,7 +427,7 @@ int tb_run_game(int* const final_score) {
     int pause_y = guide_y + 2;
     int pause_x = guide_x;
 
-    tb_block* focus_block = tb_spawn_block(grid->y - 1, grid->x + TB_GRID_WIDTH/2);
+    tb_block* focus_block = tb_spawn_block(grid->y, grid->x + TB_GRID_WIDTH/2);
     tb_block* next_block = tb_spawn_block(next_block_y, next_block_x);
 
     if (!focus_block || !next_block) {
