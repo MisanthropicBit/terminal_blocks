@@ -76,7 +76,7 @@ int main() {
                 break;
         }
 
-        if (next_state > 0) {
+        if (next_state >= 0) {
             state = next_state;
             tb_clear_screen();
         } else if (next_state == -1) {
