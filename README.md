@@ -51,7 +51,8 @@ alias terminal_blocks="<path-to-terminal_blocks-executable>"
 
 * **a**: Move block left
 * **d**: Move block right
-* **s**: Move block down
+* **w**: Move menu cursor up
+* **s**: Move block/menu cursor down
 * **j**: Rotate left
 * **k**: Rotate right
 * **p**: Play game (in menu) or pause/unpause game
