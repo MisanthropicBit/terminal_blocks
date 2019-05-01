@@ -23,6 +23,8 @@ static const int TB_VERSION_REVISION = 0;
 #define TB_KEY_RIGHT         'd'
 #define TB_KEY_UP            'w'
 #define TB_KEY_CONFIRM       'f'
+#define TB_KEY_ENTER1        10
+#define TB_KEY_ENTER2        13
 #define TB_KEY_DELETE        127 // Backspace
 #define TB_KEY_ROTATE_LEFT   'j'
 #define TB_KEY_ROTATE_RIGHT  'k'

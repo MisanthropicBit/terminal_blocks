@@ -14,6 +14,27 @@ char* tb_get_user_home() {
     return getenv("HOME");
 }
 
+/// Construct the path to the user's home directory
+char* tb_get_highscore_path() {
+    char* home = tb_get_user_home();
+
+    if (!home) {
+        return NULL;
+    }
+
+    int len = strlen(home) + strlen(TB_HIGHSCORE_PATH);
+    char* hs_path = malloc(sizeof(char) * (len + 1));
+
+    if (!hs_path) {
+        return NULL;
+    }
+
+    strcpy(hs_path, home);
+    strcat(hs_path, TB_HIGHSCORE_PATH);
+
+    return hs_path;
+}
+
 int main() {
     tb_register_signal_handlers();
 
@@ -27,38 +48,19 @@ int main() {
     srand(time(0));
 
     int running = 1;
+    int error = 0;
     int state = TB_STATE_MENU;
     int next_state = 0;
     int final_score = 0;
 
-    // Construct the path to the user's home directory
-    char* home = tb_get_user_home();
-
-    if (!home) {
-        tb_close_terminal();
-        return 1;
-    }
-
-    int len = strlen(home) + strlen(TB_HIGHSCORE_PATH);
-    char* hs_path = malloc(sizeof(char) * (len + 1));
-
-    if (!hs_path) {
-        tb_close_terminal();
-        return 1;
-    }
-
-    strcpy(hs_path, home);
-    strcat(hs_path, TB_HIGHSCORE_PATH);
-
     // Load highscores
+    char* hs_path = tb_get_highscore_path();
+
     tb_highscores* highscores =
         tb_load_highscores(hs_path, TB_MAX_HIGHSCORES);
 
-    free(hs_path);
-
     if (!highscores) {
-        tb_close_terminal();
-        return 1;
+        goto error;
     }
 
     while (running) {
@@ -72,21 +74,25 @@ int main() {
                 break;
 
             case TB_STATE_HIGHSCORE:
-                next_state = tb_enter_highscore(final_score, highscores);
+                next_state = tb_enter_highscore(final_score, hs_path, highscores);
                 break;
         }
 
         if (next_state >= 0) {
             state = next_state;
-            tb_clear_screen();
         } else if (next_state == -1) {
             running = 0;
         }
+    }
+
+    error:
+    if (hs_path) {
+        free(hs_path);
     }
 
     tb_deallocate_highscores(highscores);
     tb_clear_screen();
     tb_close_terminal();
 
-    return 0;
+    return error;
 }

@@ -132,7 +132,7 @@ int tb_save_highscores(const char* const path,
     FILE* file = fopen(path, "w");
 
     for (int i = 0; i < highscores->count; ++i) {
-        fprintf(file, "%s:%d", highscores->records[i]->name, highscores->records[i]->score);
+        fprintf(file, "%s %d\n", highscores->records[i]->name, highscores->records[i]->score);
     }
 
     fclose(file);
@@ -166,6 +166,10 @@ int tb_record_highscore(const char* const name, int score, tb_highscores* highsc
         for (int i = record_count - 1; i >= insertion_idx; --i) {
             highscores->records[i - 1] = highscores->records[i];
         }
+
+        // Free the previous highscore
+        free(highscores->records[insertion_idx]);
+        highscores->records[insertion_idx] = NULL;
 
         // Insert the record at its final position
         strcpy(highscore->name, name);

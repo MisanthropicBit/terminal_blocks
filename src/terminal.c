@@ -93,6 +93,10 @@ void tb_define_colors() {
     }
 }
 
+void tb_wait_for_key() {
+    while (getch() == -1);
+}
+
 void tb_print_colored(int y, int x, char* message, int color_idx) {
     tb_set_color(color_idx);
     mvaddstr(y, x, message);

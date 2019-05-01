@@ -31,6 +31,9 @@ void tb_reset_color(int color_index);
 /// Define all colors needed for the game
 void tb_define_colors();
 
+/// Wait for the user to press a key
+void tb_wait_for_key();
+
 /// Print a message. Its text is given by a mask where
 /// each entry is either skipped (zero) or block_char is
 /// printed (1)
