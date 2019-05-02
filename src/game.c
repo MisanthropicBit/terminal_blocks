@@ -395,6 +395,68 @@ void tb_draw_box(int y, int x, int height, int width, int left_char,
     mvaddch(y, x + width, tr_char);
 }
 
+int tb_force_move_block(tb_game_grid* grid, tb_block* focus_block) {
+    if (tb_check_wall_collisions(focus_block->squares, Down, grid) ||
+            tb_check_block_collisions(focus_block->squares, Down, grid)) {
+        // We hit something, return 1 to signal to start sliding
+        return 1;
+    }
+
+    // We did not hit anything so force move the focus block
+    tb_clear_block(focus_block);
+    tb_move_block(focus_block, 1, 0);
+
+    return 0;
+}
+
+void tb_draw_game(tb_game_grid* grid, tb_block* focus_block,
+                  tb_block* next_block, int score, int draw_guide,
+                  int pause, int game_over, int score_y, int score_x,
+                  int guide_y, int guide_x, int pause_y, int pause_x) {
+    if (!grid) {
+        return;
+    }
+
+    if (game_over) {
+        mvprintw(grid->y - 6, grid->x, "Game Over!");
+        mvprintw(grid->y - 5, grid->x, "Press any key to continue...");
+    }
+
+    // Draw the game grid boundary
+    tb_draw_box(grid->y, grid->x - 1, grid->height, grid->width + 1,
+                TB_GRID_SIDE_CHAR,
+                TB_GRID_SIDE_CHAR,
+                ' ',
+                TB_GRID_BOTTOM_CHAR,
+                TB_GRID_SIDE_CHAR,
+                TB_GRID_BOTTOMLEFT_CHAR,
+                TB_GRID_BOTTOMRIGHT_CHAR,
+                TB_GRID_SIDE_CHAR);
+
+    // Draw the grid
+    tb_draw_grid(grid, TB_BLOCK_CHAR);
+
+    if (draw_guide) {
+        // Draw the guides that show where the block will land
+        tb_draw_guides(focus_block, grid);
+    }
+
+    mvprintw(guide_y, guide_x, "Guides %s", draw_guide ? "enabled" : "disabled");
+
+    if (pause) {
+        mvprintw(pause_y, pause_x, "Game paused");
+    }
+
+    // Draw the focus block
+    tb_draw_block(focus_block);
+
+    // Draw the next block and the current score and level
+    // We print the score on the right side to avoid having
+    // to move it left as the score grows
+    tb_draw_block(next_block);
+    mvprintw(score_y, score_x, "Score: %d", score);
+}
+
 int tb_run_game(int* const final_score) {
     *final_score = 0;
     int score = 0;
@@ -447,14 +509,11 @@ int tb_run_game(int* const final_score) {
             if (!sliding) {
                 // Check if it is time to forcefully move the focus block
                 if (tb_current_time() - move_time >= TB_MOVE_DELAY) {
-                    if (tb_check_wall_collisions(focus_block->squares, Down, grid) ||
-                        tb_check_block_collisions(focus_block->squares, Down, grid)) {
-                            // We hit something, start sliding
-                            sliding = 1;
-                            slide_time = tb_current_time();
+                    sliding = tb_force_move_block(grid, focus_block);
+
+                    if (sliding) {
+                        slide_time = tb_current_time();
                     } else {
-                        tb_clear_block(focus_block);
-                        tb_move_block(focus_block, 1, 0);
                         move_time = tb_current_time();
                     }
                 }
@@ -498,45 +557,11 @@ int tb_run_game(int* const final_score) {
                     }
                 }
             }
-        } else {
-            // Game is over
-            mvprintw(grid->y - 6, grid->x, "Game Over!");
-            mvprintw(grid->y - 5, grid->x, "Press any key to continue...");
         }
 
-        // Draw the game grid boundary
-        tb_draw_box(grid->y, grid->x - 1, grid->height, grid->width + 1,
-                    TB_GRID_SIDE_CHAR,
-                    TB_GRID_SIDE_CHAR,
-                    ' ',
-                    TB_GRID_BOTTOM_CHAR,
-                    TB_GRID_SIDE_CHAR,
-                    TB_GRID_BOTTOMLEFT_CHAR,
-                    TB_GRID_BOTTOMRIGHT_CHAR,
-                    TB_GRID_SIDE_CHAR);
-
-        // Draw the grid
-        tb_draw_grid(grid, TB_BLOCK_CHAR);
-
-        if (draw_guide) {
-            // Draw the guides that show where the block will land
-            tb_draw_guides(focus_block, grid);
-        }
-
-        mvprintw(guide_y, guide_x, "Guides %s", draw_guide ? "enabled" : "disabled");
-
-        if (pause) {
-            mvprintw(pause_y, pause_x, "Game paused");
-        }
-
-        // Draw the focus block
-        tb_draw_block(focus_block);
-
-        // Draw the next block and the current score and level
-        // We print the score on the right side to avoid having
-        // to move it left as the score grows
-        tb_draw_block(next_block);
-        mvprintw(score_y, score_x, "Score: %d", score);
+        tb_draw_game(grid, focus_block, next_block, score, draw_guide,
+                     pause, game_over, score_y, score_x, guide_y, guide_x,
+                     pause_y, pause_x);
     }
 
     // Deallocate memory
