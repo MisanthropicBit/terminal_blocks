@@ -71,6 +71,8 @@ int tb_run_menu(tb_highscores* highscores) {
     const int option_spacing = 2;
     char chr = 0;
 
+    werase(stdscr);
+
     // Display menu title, options and cursor
     tb_display_menu_title(LINES/2 - TB_TITLE_HEIGHT, COLS/2 - TB_TITLE_WIDTH/2);
 
