@@ -126,6 +126,11 @@ int tb_clear_lines(tb_game_grid* grid) {
             for (int col = 0; col < grid->width; ++col) {
                 grid->grid[(line + lines_cleared) * grid->width + col] =
                     grid->grid[line * grid->width + col];
+
+                // Clear the old line (strictly only required for the last
+                // non-empty line since it is not overwritten by a line above
+                // it)
+                grid->grid[line * grid->width + col] = 0;
             }
 
             // If the line was empty, end the search
