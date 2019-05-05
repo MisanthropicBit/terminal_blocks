@@ -1,7 +1,7 @@
 # Terminal Blocks [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/MisanthropicBit/vim-analog/master/LICENSE)
 
-A small [1232 sloc](https://github.com/AlDanial/cloc) (as of
-[8119c1](https://github.com/MisanthropicBit/terminal_blocks/tree/8119c153360b3ac7dcd1477c9367ef49903d343d))
+A small [1341 sloc](https://github.com/AlDanial/cloc) (as of
+[7daa3b](https://github.com/MisanthropicBit/terminal_blocks/tree/7daa3b236390c85dcee6ac840a5649dfa9fc9b98))
 line Tetris clone that can be played in the terminal. Requires
 [`ncurses`](https://en.wikipedia.org/wiki/Ncurses).
 
@@ -11,14 +11,14 @@ line Tetris clone that can be played in the terminal. Requires
       19 unique files.
        0 files ignored.
 
-github.com/AlDanial/cloc v 1.80  T=0.20 s (93.5 files/s, 8608.4 lines/s)
+github.com/AlDanial/cloc v 1.80  T=0.12 s (159.6 files/s, 15912.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-C                                9            255            130            996
-C/C++ Header                    10             76             57            236
+C                                9            283            134           1088
+C/C++ Header                    10             77             59            253
 -------------------------------------------------------------------------------
-SUM:                            19            331            187           1232
+SUM:                            19            360            193           1341
 -------------------------------------------------------------------------------
 ```
 
