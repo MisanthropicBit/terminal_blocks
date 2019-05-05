@@ -508,11 +508,7 @@ int tb_run_game(int* const final_score) {
             break;
         }
 
-        werase(stdscr);
-
-        if (pause) {
-            // Do not update the game when paused
-        } else if (!game_over) {
+        if (!pause && !game_over) {
             if (!sliding) {
                 // Check if it is time to forcefully move the focus block
                 if (tb_current_time() - move_time >= TB_MOVE_DELAY) {
@@ -565,6 +561,8 @@ int tb_run_game(int* const final_score) {
                 }
             }
         }
+
+        werase(stdscr);
 
         tb_draw_game(grid, focus_block, next_block, score, draw_guide,
                      pause, game_over, score_y, score_x, guide_y, guide_x,
