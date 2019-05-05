@@ -44,7 +44,14 @@ int tb_enter_highscore(int score, const char* hs_path, tb_highscores* highscores
     int done = 0;
     int i = 0;
     int y = LINES / 2 - TB_GRID_HEIGHT / 2 - 8;
-    int x = COLS / 2 - TB_GRID_WIDTH / 2 - 1;
+
+    const char* const greeting = "Congratulations, you got %d%s place";
+    const char* const enter_name = "Enter name: %s";
+    const char* const press_enter =  "Press [Enter] to confirm";
+
+    int greeting_x = COLS / 2 - strlen(greeting) / 2;
+    int enter_name_x = COLS / 2 - strlen(enter_name) / 2;
+    int press_enter_x = COLS / 2 - strlen(press_enter) / 2;
 
     const char* const place_suffixes[TB_MAX_HIGHSCORES] = {
         "st",
@@ -54,15 +61,18 @@ int tb_enter_highscore(int score, const char* hs_path, tb_highscores* highscores
         "th"
     };
 
-    werase(stdscr);
-
     while (!done) {
         int ch = getch();
         done = tb_handle_highscore_input(ch, &i, name);
 
-        mvprintw(y, x, "Congratulations, you got %d%s place", pos, place_suffixes[pos - 1]);
-        mvprintw(y + 1, x, "Enter name: %s", name);
-        mvprintw(y + 2, x, "%s", "Press [Enter] to confirm\n");
+        // Recompute the x-coordinate to re-center the name
+        enter_name_x = COLS / 2 - (strlen(enter_name) + strlen(name)) / 2 ;
+
+        mvprintw(y, greeting_x, greeting, pos, place_suffixes[pos - 1]);
+        move(y + 1, 0);
+        clrtoeol();
+        mvprintw(y + 1, enter_name_x, enter_name, name);
+        mvprintw(y + 2, press_enter_x, press_enter);
 
         tb_redraw_screen();
     }
