@@ -4,3 +4,4 @@ terminal_blocks
 *.docx
 tags
 *.dSYM/
+valgrind.log
