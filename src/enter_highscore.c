@@ -15,7 +15,7 @@ int tb_handle_highscore_input(int ch, int* i, char* name) {
 
         case TB_KEY_DELETE:
             if (*i > 0) {
-                name[--(*i)] = ' ';
+                name[--(*i)] = '\0';
             }
             break;
 
