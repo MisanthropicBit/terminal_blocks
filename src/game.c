@@ -465,10 +465,10 @@ void tb_draw_game(tb_game_grid* grid, tb_block* focus_block,
 int tb_run_game(int* const final_score) {
     *final_score = 0;
     int score = 0;
+    int quit = 0;
     int game_over = 0;
     int draw_guide = 1;
     int pause = 0;
-    int running = 1;
     tb_time_unit move_time = tb_current_time();
     tb_time_unit slide_time = 0;
     int sliding = 0;
@@ -501,8 +501,10 @@ int tb_run_game(int* const final_score) {
         return TB_STATE_MENU;
     }
 
-    while (running) {
-        if(tb_handle_game_input(focus_block, grid, game_over, &draw_guide, &pause)) {
+    while (1) {
+        quit = tb_handle_game_input(focus_block, grid, game_over, &draw_guide, &pause);
+
+        if (quit) {
             break;
         }
 
@@ -577,5 +579,5 @@ int tb_run_game(int* const final_score) {
     // Save the final score for the highscore state
     *final_score = score;
 
-    return TB_STATE_HIGHSCORE;
+    return quit ? TB_STATE_MENU : TB_STATE_HIGHSCORE;
 }
