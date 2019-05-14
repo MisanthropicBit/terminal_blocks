@@ -1,4 +1,4 @@
-# Terminal Blocks ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MisanthropicBit/terminal_blocks.svg)
+# Terminal Blocks ![GitHub license](https://img.shields.io/github/license/MisanthropicBit/terminal_blocks.svg) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MisanthropicBit/terminal_blocks.svg)
 
 A small [1341 sloc](https://github.com/AlDanial/cloc) (as of
 [7daa3b](https://github.com/MisanthropicBit/terminal_blocks/tree/7daa3b236390c85dcee6ac840a5649dfa9fc9b98))
