@@ -7,7 +7,7 @@ static const int TB_VERSION_MAJOR    = 0;
 static const int TB_VERSION_MINOR    = 1;
 static const int TB_VERSION_REVISION = 0;
 
-#define TB_BLOCK_CHAR           '#'
+#define TB_BLOCK_CHAR           L"\u2588"
 #define TB_CURSOR_CHAR          '>'
 #define TB_SQUARES_PER_BLOCK    4
 #define TB_MAX_COLOR_ID         7

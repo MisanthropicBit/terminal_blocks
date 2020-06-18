@@ -1,7 +1,8 @@
 BIN := terminal_blocks
 CC := clang
-CCFLAGS := $(shell ncurses5.4-config --cflags) -Iinclude -Wall -Wshadow -Wpedantic -Wextra -g
-LDFLAGS := $(shell ncurses5.4-config --libs)
+CCFLAGS := $(shell ncurses6-config --cflags) -Iinclude -Wall -Wshadow -Wpedantic -Wextra -g
+LDFLAGS := -L/opt/local/lib -Wl,-search_paths_first -lncursesw
+#$(shell ncurses6-config --libs)
 OBJDIR := objs
 SRCDIR := src
 
